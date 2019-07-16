@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using burgershack.Models;
+using burgershack.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace burgershack.Controllers
@@ -11,12 +12,18 @@ namespace burgershack.Controllers
   [ApiController]
   public class BurgersController : ControllerBase
   {
-    List<Burger> Burgers = new List<Burger>(){
-      new Burger("er678", "Cheeseburger", "Bun, patty, pepperjack cheese, lettuce and tomato", 2),
-      new Burger("567yuk", "Bacon Cheeseburger", "Bun, patty, peppered bacon, jalepeno pepperjack cheese, lettuce and tomato ", 2.50),
-      new Burger("345tyu", "Double Cheeseburger", "Like the cheeseburger but doubled", 3.25)
+    private readonly BurgerRepository _br; //provieds refrence to repository (service)
 
-  };
+    public BurgersController(BurgersController br)
+    {
+      _br = br;
+    }
+    //   List<Burger> Burgers = new List<Burger>(){
+    //     new Burger("er678", "Cheeseburger", "Bun, patty, pepperjack cheese, lettuce and tomato", 2),
+    //     new Burger("567yuk", "Bacon Cheeseburger", "Bun, patty, peppered bacon, jalepeno pepperjack cheese, lettuce and tomato ", 2.50),
+    //     new Burger("345tyu", "Double Cheeseburger", "Like the cheeseburger but doubled", 3.25)
+
+    // };
     // GET api/Burgers
     [HttpGet]
     public ActionResult<IEnumerable<Burger>> Get()
