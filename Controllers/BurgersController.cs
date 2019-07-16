@@ -12,30 +12,43 @@ namespace burgershack.Controllers
   public class BurgersController : ControllerBase
   {
     List<Burger> Burgers = new List<Burger>(){
-      new Burger("Cheeseburger", 2, "er678"),
-      new Burger("Bacon Cheeseburger", 2.50, "567yuk"),
-      new Burger("Double Cheeseburger", 3.25, "345tyu")
+      new Burger("er678", "Cheeseburger", "Bun, patty, pepperjack cheese, lettuce and tomato", 2),
+      new Burger("567yuk", "Bacon Cheeseburger", "Bun, patty, peppered bacon, jalepeno pepperjack cheese, lettuce and tomato ", 2.50),
+      new Burger("345tyu", "Double Cheeseburger", "Like the cheeseburger but doubled", 3.25)
 
   };
     // GET api/Burgers
     [HttpGet]
-    public ActionResult<IEnumerable<string>> Get()
+    public ActionResult<IEnumerable<Burger>> Get()
     {
-      return Ok(Burgers);
+      try
+      {
+        return Ok(Burgers);
+
+      }
+      catch (Exception e)
+      {
+        return BadRequest(e);
+      }
+
 
     }
 
     // GET api/Burgers/5
     [HttpGet("{id}")]
-    public ActionResult<string> Get(int id)
+    public ActionResult<Burger> Get(string id)
     {
       try
       {
-        return Ok(Burgers[id]);
+        Burger found = Burgers.Find(burger => burger.Id == id);
+        if (found == null)
+        {
+          return BadRequest("No burger with that Id.");
+        }
+        return Ok(found);
       }
       catch (Exception e)
       {
-
         return BadRequest(e);
       }
     }
